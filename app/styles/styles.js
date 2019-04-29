@@ -17,8 +17,8 @@ export default styles = StyleSheet.create({
   /* Cores */
   primaryColor: {color: "#19197f"},
   primaryColorBack: {backgroundColor: "#19197f"},
-  secundaryColor: {color: "#ff3333"},
-  secundaryColorBack: {backgroundColor: "#ff3333"},
+  secundaryColor: {color: "#e52d2d"},
+  secundaryColorBack: {backgroundColor: "#e52d2d"},
   whiteColor: {color: "white"},
   whiteColorBack: {backgroundColor: "white"},
   greyColor: {color:"#333333"},
@@ -42,11 +42,14 @@ export default styles = StyleSheet.create({
   marginTop: {marginTop: 10},
   bigMarginTop: {marginTop: 30},
   smallMarginTop: {marginTop: 5},
-
+  bordered:{borderWidth: 2, borderColor: "#19197f"},
+  rounded: {borderRadius: 20},
+  paddingHorizontal: {paddingHorizontal:40},
 
   /* Específicos */
   viewTitleLogin: {backgroundColor:"#3333ff" },
-  logo: {width: 140, height: 140}
+  logo: {width: 100, height: 100},
+
 
 
 
