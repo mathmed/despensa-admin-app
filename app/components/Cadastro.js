@@ -11,8 +11,8 @@
 
 /* importações necessárias */
 import React, {Component} from 'react';
-import {Container, Footer, Content, Text, Label, View, Input, Item, Icon, Button} from "native-base";
-import {StatusBar, TouchableOpacity} from "react-native";
+import {Container, Content, Text, Label, View, Input, Item, Icon, Button} from "native-base";
+import {StatusBar} from "react-native";
 import { connect } from 'react-redux';
 
 import styles from "../styles/styles";

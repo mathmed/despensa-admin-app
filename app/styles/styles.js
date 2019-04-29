@@ -15,8 +15,8 @@ import {StyleSheet} from "react-native";
 export default styles = StyleSheet.create({
 
   /* Cores */
-  primaryColor: {color: "#19197f"},
-  primaryColorBack: {backgroundColor: "#19197f"},
+  primaryColor: {color: "#0f0f4c"},
+  primaryColorBack: {backgroundColor: "#0f0f4c"},
   secundaryColor: {color: "#e52d2d"},
   secundaryColorBack: {backgroundColor: "#e52d2d"},
   whiteColor: {color: "white"},

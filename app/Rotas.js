@@ -13,6 +13,7 @@ import React, {Component} from 'react';
 import { Router, Scene } from 'react-native-router-flux';
 import Login from './components/Login.js';
 import Cadastro from './components/Cadastro.js';
+import Inicio from './components/Inicio.js';
 
 
 export default class Rotas extends Component{
@@ -23,6 +24,7 @@ export default class Rotas extends Component{
 			<Router navigationBarStyle={{ backgroundColor: '#fff' }} titleStyle={{ color: '#ff5400' }}>
 				<Scene key = 'root'>
 					<Scene key = 'login' component = {Login} hideNavBar />
+					<Scene key = 'inicio' component = {Inicio} hideNavBar />
 					<Scene key = 'cadastro' component = {Cadastro} title="Criar nova conta" titleStyle = {{color: 'white', backgroundColor: '#0f0f4c', fontSize: 20}} hideNavBar = {false} navigationBarStyle={{backgroundColor: '#0f0f4c', height: 60}} headerTintColor="white" />
 				</Scene>
 			</Router>

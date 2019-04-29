@@ -11,11 +11,12 @@
 
 /* importações necessárias */
 import React, {Component} from 'react';
-import {Container, Footer, Content, Text, Label, View, Input, Item, Icon, Button} from "native-base";
+import {Container, Footer, Text, View, Input, Item, Icon, Button} from "native-base";
 import {Image, ScrollView} from "react-native"; 
 import {StatusBar, TouchableOpacity} from "react-native";
 import { connect } from 'react-redux';
 import {Actions} from "react-native-router-flux";
+
 
 import styles from "../styles/styles";
 
@@ -54,7 +55,7 @@ class Login extends Component{
                     </View>
 
                     <View style = {[styles.bigMarginTop, styles.paddingHorizontal]}>
-                        <Button full iconRight style = {[styles.whiteColorBack, styles.bordered]}>
+                        <Button onPress = {() => Actions.inicio()} full iconRight style = {[styles.whiteColorBack, styles.bordered]}>
                             <Text style = {[styles.bold, styles.primaryColor]}>ENTRAR</Text>
                             <Icon style = {styles.primaryColor} type = "FontAwesome5" name='sign-in-alt' />
                         </Button>
