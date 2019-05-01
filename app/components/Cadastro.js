@@ -42,6 +42,10 @@ class Cadastro extends Component{
         /* Chamando a Action de registro */
         this.props.cadastrar_usuario(nome_sobrenome, usuario, email, senha, confirmacao);
 
+        /* Limpando os dados caso o usuário seja cadastrado */
+        this.setState({senha: "", confirmacao: ""});
+        
+
     }
 
 	render(){

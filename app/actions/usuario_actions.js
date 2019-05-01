@@ -43,9 +43,10 @@ export const cadastrar_usuario = (nome, usuario, email, senha, confirmacao) => {
                             /* Verificando se foi cadastrado */
                             if(retorno == "Sucesso")
                                 showMessage("Usuário cadastrado com sucesso!", "success")
-                            else 
-                                showMessage(retorno, "danger");
 
+                            else
+                                showMessage(retorno, "danger");
+            
                             dispatch({type: "FINALIZAR_CADASTRO_USUARIO"});
                     })
 

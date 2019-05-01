@@ -3,7 +3,7 @@
   * Classe de controle do Login do aplicativo
   * Desenvolvido por Mateus Medeiros
   * https://github.com/mathmed
-  * Última atualização no arquivo: 29/04/2019
+  * Última atualização no arquivo: 01/05/2019
   * Projeto utilizando o framework React Native
   * Software desenvolvido para disciplina de Engenharia de Software II / UFRN
 */
@@ -44,7 +44,7 @@ class Login extends Component{
                     <View style = {styles.bigMarginTop}>
                         <Item>
                             <Icon style = {styles.primaryColor} type = "FontAwesome5" name='user' />
-                            <Input onFocus = {() => this.scrollView.scrollToEnd({animated: true})} placeholder='Usuário'/>
+                            <Input placeholder='Usuário'/>
                         </Item>
                     </View>
                     <View style = {styles.bigMarginTop}>
