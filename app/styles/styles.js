@@ -3,7 +3,7 @@
   * Arquivo de controle de estilos do aplicativo
   * Desenvolvido por Mateus Medeiros
   * https://github.com/mathmed
-  * Última atualização no arquivo: 27/04/2019
+  * Última atualização no arquivo: 01/05/2019
   * Projeto utilizando o framework React Native
   * Software desenvolvido para disciplina de Engenharia de Software II / UFRN
 */
@@ -22,6 +22,7 @@ export default styles = StyleSheet.create({
   whiteColor: {color: "white"},
   whiteColorBack: {backgroundColor: "white"},
   greyColor: {color:"#333333"},
+  greenColor: {color:"green"},
 
   /* Fontes */
   smallFont: {fontSize: 14},
