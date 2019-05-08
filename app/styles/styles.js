@@ -3,7 +3,7 @@
   * Arquivo de controle de estilos do aplicativo
   * Desenvolvido por Mateus Medeiros
   * https://github.com/mathmed
-  * Última atualização no arquivo: 01/05/2019
+  * Última atualização no arquivo: 08/05/2019
   * Projeto utilizando o framework React Native
   * Software desenvolvido para disciplina de Engenharia de Software II / UFRN
 */
@@ -24,6 +24,10 @@ export default styles = StyleSheet.create({
   greyColor: {color:"#333333"},
   greenColor: {color:"green"},
 
+  /* Botões */
+  circleButton: {height:60, width:60, borderRadius: 30, justifyContent: "center", alignItems: "center"},
+  buttonBack: {height: 48, width: 48, borderRadius: 24, justifyContent: "center", alignItems: "center", backgroundColor: "#0f0f4c"},
+
   /* Fontes */
   smallFont: {fontSize: 14},
   mediumFont: {fontSize: 20},
@@ -36,6 +40,7 @@ export default styles = StyleSheet.create({
   /* Views */
   container: {backgroundColor: "white", flex: 1, paddingHorizontal: 15, marginTop: 10},
   center: {justifyContent: "center", alignItems: "center", alignSelf: "center"},
+  centerVertical: {alignItems: "center"},
   column: {flexDirection: "column"},
   row: {flexDirection: "row"},
   spaceAround: {justifyContent: "space-around"},
@@ -43,6 +48,9 @@ export default styles = StyleSheet.create({
   marginTop: {marginTop: 10},
   bigMarginTop: {marginTop: 30},
   smallMarginTop: {marginTop: 5},
+  marginBottom: {marginBottom: 10},
+  bigMarginBottom: {marginBottom: 30},
+  smallMarginBottom: {marginBottom: 5},
   bordered:{borderWidth: 2, borderColor: "#19197f"},
   rounded: {borderRadius: 20},
   paddingHorizontal: {paddingHorizontal:40},
@@ -50,7 +58,7 @@ export default styles = StyleSheet.create({
   /* Específicos */
   viewTitleLogin: {backgroundColor:"#3333ff" },
   logo: {width: 100, height: 100},
-
+  viewCircleButton: {alignItems: "flex-end", justifyContent: "flex-end", alignSelf: "flex-end"}
 
 
 

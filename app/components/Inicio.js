@@ -3,8 +3,8 @@
   * Classe da interface do início do aplicativo
   * Desenvolvido por Mateus Medeiros
   * https://github.com/mathmed
-  * Última atualização no arquivo: 29/04/2019
-  * Projeto utilizando o framework React Native
+  * Última atualização no arquivo: 08/05/2019
+  * Projeto utilizando o framework Re8act Native
   * Software desenvolvido para disciplina de Engenharia de Software II / UFRN
 */
 
@@ -16,6 +16,7 @@ import {StatusBar} from "react-native";
 import { connect } from 'react-redux';
 import Menu from './Menu.js';
 import styles from "../styles/styles";
+import ListarDespensa from './despensa/ListarDespensa.js';
 
 
 /* Iniciando a classe de login */
@@ -24,9 +25,27 @@ class Inicio extends Component{
     /* Construtor da classe com estados utilizados */
     constructor(props){
         super(props);
+
+        /* Estado para controlar a tela atual da aplicação */
+        this.state = {tela_atual: "DESPENSA"}
+
     }
 
+    /* Função para renderizar a tela selecionada */
+    renderizar_tela = () => {
 
+        if(this.state.tela_atual == "DESPENSA")
+            return <ListarDespensa />
+
+        else if (this.state.tela_atual == "LISTAS")
+            return <Text>listas</Text>
+    
+        else if (this.state.tela_atual == "GRUPOS")
+            return <Text>grupos</Text>
+
+        else if (this.state.tela_atual == "GASTOS")
+            return <Text>gastos</Text>
+    }
 
 	render(){
         
@@ -44,25 +63,26 @@ class Inicio extends Component{
                             <Title>MINHA DESPENSA</Title>
                         </Body>
                     </Header>
-                    <Content style = {[styles.container, styles.whiteColorBack]}>
+     
 
-                    </Content>
+                    {this.renderizar_tela()}
+
 
                     <Footer style = {styles.primaryColorBack}>
                         <FooterTab style = {styles.primaryColorBack}>
-                            <Button vertical>
+                            <Button active = {this.state.tela_atual == "GRUPOS" ? true : false} onPress = {() => this.setState({tela_atual: "GRUPOS"})} vertical>
                                 <Icon type = "FontAwesome5" name="users" />
                                 <Text>Grupos</Text>
                             </Button>
-                            <Button vertical>
-                                <Icon active type = "FontAwesome5" name="shopping-cart" />
+                            <Button active = {this.state.tela_atual == "LISTAS" ? true : false} onPress = {() => this.setState({tela_atual: "LISTAS"})} vertical>
+                                <Icon type = "FontAwesome5" name="shopping-cart" />
                                 <Text>Listas</Text>
                             </Button>
-                            <Button vertical active>
-                                <Icon active type = "FontAwesome5" name="home" />
+                            <Button active = {this.state.tela_atual == "DESPENSA" ? true : false} onPress = {() => this.setState({tela_atual: "DESPENSA"})} vertical>
+                                <Icon type = "FontAwesome5" name="home" />
                                 <Text>Despensa</Text>
                             </Button>
-                            <Button vertical>
+                            <Button active = {this.state.tela_atual == "GASTOS" ? true : false}  onPress = {() => this.setState({tela_atual: "GASTOS"})} vertical>
                                 <Icon type = "FontAwesome5" name="chart-line" />
                                 <Text>Gastos</Text>
                             </Button>

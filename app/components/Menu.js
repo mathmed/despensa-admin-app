@@ -16,6 +16,7 @@ import {StatusBar} from "react-native";
 import { connect } from 'react-redux';
 import styles from "../styles/styles";
 
+import {deslogar} from "../actions/usuario_actions";
 
 /* Iniciando a classe de login */
 class Menu extends Component{
@@ -95,7 +96,7 @@ class Menu extends Component{
                     </Body>
                 </ListItem>
                 <View style = {[styles.bigMarginTop, styles.center]}>
-                    <Button iconRight rounded style = {styles.secundaryColorBack}>
+                    <Button onPress = {() => this.props.deslogar(this.props.usuario.token)} iconRight rounded style = {styles.secundaryColorBack}>
                         <Text>Sair</Text>
                         <Icon type = "FontAwesome5" name='door-open' />
                     </Button>
@@ -107,6 +108,10 @@ class Menu extends Component{
 }
 
 
-const mapStateToProps = state => ({});
+const mapStateToProps = state => ({
 
-export default connect(mapStateToProps, {})(Menu);
+    usuario: state.usuario_reducer.dados_usuario
+
+});
+
+export default connect(mapStateToProps, {deslogar})(Menu);
