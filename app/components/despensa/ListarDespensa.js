@@ -3,7 +3,7 @@
   * Classe de interface para listagem de despensas
   * Desenvolvido por Mateus Medeiros
   * https://github.com/mathmed
-  * Última atualização no arquivo: 08/05/2019
+  * Última atualização no arquivo: 09/05/2019
   * Projeto utilizando o framework React Native
   * Software desenvolvido para disciplina de Engenharia de Software II / UFRN
 */
@@ -11,14 +11,17 @@
 
 /* importações necessárias */
 import React, {Component} from 'react';
-import {Container, Text, Label, View, Input, Item, Icon, Button, Spinner} from "native-base";
-import {Modal} from "react-native"; 
+import {Container, Text, Label, View, Input, Item, Button, Spinner, Root, List, ListItem, Right, Icon, Left} from "native-base";
+import {Modal, TouchableHighlight} from "react-native"; 
 import { connect } from 'react-redux';
+import _ from "lodash";
 
 import styles from "../../styles/styles";
 
 /* Actions necessárias */
-import {criar_despensa} from "../../actions/despensa_actions";
+import {criar_despensa, listar_despensas} from "../../actions/despensa_actions";
+
+var listar;
 
 /* Iniciando a classe de login */
 class ListarDespensa extends Component{
@@ -29,11 +32,63 @@ class ListarDespensa extends Component{
         this.state = {
             modal_cadastro: false,
             nome_cadastrar_despensa: "",
-            repita_color: "transparent"
+            repita_color: "transparent",
+            despensas: ""
         }
     }
 
+    /* Requisitando a lista de despensas */
+    componentWillMount(){
+        this.props.listar_despensas(this.props.usuario.uid);
+    }
+
+    componentWillReceiveProps(props){
+        this.setState({despensas: props.despensas})
+    }
+
+    render_dados = () => {
+        
+        if(this.props.carregando_despensas)
+            return (
+                <View>
+                    <Spinner color='#e52d2d' />
+                    <Text style = {[styles.textCenter, styles.bold, styles.secundaryColor]}>Carregando suas despensas ...</Text>
+                </View>
+            )
+        
+
+        if(this.state.despensas.length < 1)
+            return (
+                <View>
+                    <Text style = {[styles.textCenter, styles.bold, styles.secundaryColor]}>Nenhuma despensa encontrada, crie uma agora mesmo</Text>
+                </View>
+            )
+
+        if(this.state.despensas)
+            return <View>{listar}</View>
+    
+    }
+
+    criar_despensa = () => {
+        this.setState({nome_cadastrar_despensa: ""})
+        this.props.criar_despensa(this.props.usuario.uid, this.state.nome_cadastrar_despensa); 
+    }
+
+
 	render(){
+
+        listar = _.map(this.state.despensas, (val, uid) => {            
+            return(
+                <TouchableHighlight style = {styles.secundaryColorBack}  onPress = {() => alert("dadads")}>
+                    <View>
+                            <Text>{val.descricao}</Text>
+                    </View>
+                </TouchableHighlight>
+            )
+        });
+
+        console.log(this.state.despensas)
+
 		return(
             <Container style = {[styles.spaceBetween, styles.container]}>
                 <Modal
@@ -43,6 +98,7 @@ class ListarDespensa extends Component{
                 onRequestClose={() => {
                     this.setState({modal_cadastro: !this.state.modal_cadastro})
                 }}>
+                    <Root>
                     <View style={[styles.container, styles.bigMarginTop]}>
                         <View style = {[styles.marginTop, styles.spaceAround, styles.row, styles.centerVertical]}>
                             <Button onPress = {() => this.setState({modal_cadastro: !this.state.modal_cadastro})} success style = {styles.buttonBack}>
@@ -60,7 +116,7 @@ class ListarDespensa extends Component{
 
                         <View style = {[styles.bigMarginTop, styles.center]}>
                             {!this.props.loading ?
-                            <Button onPress = {() => this.props.criar_despensa(this.props.usuario.uid, this.state.nome_cadastrar_despensa)} iconRight rounded success full style = {styles.rounded}>
+                            <Button onPress = {() => {this.criar_despensa()}} iconRight rounded success full style = {styles.rounded}>
                                 <Text>Cadastrar</Text>
                                 <Icon type = "FontAwesome5" name = "plus"></Icon>
                             </Button>
@@ -75,11 +131,14 @@ class ListarDespensa extends Component{
                         </View>
 
                     </View>
+                    </Root>
                 </Modal>
 
-                <View style = {styles.marginTop}>
-                    <Text style = {[styles.secundaryColor, styles.bold, styles.textCenter]}>Nenhuma despensa encontrada, cadastre uma agora.</Text>
-                </View>
+                <List style = {styles.marginTop}>
+                  
+                  {this.render_dados()}
+
+                </List>
 
                 <View style = {[styles.marginBottom, styles.viewCircleButton]}>
                     <Button onPress = {() => this.setState({modal_cadastro: !this.state.modal_cadastro})} success style = {styles.circleButton}>
@@ -95,7 +154,9 @@ class ListarDespensa extends Component{
 
 const mapStateToProps = state => ({
     loading: state.despensa_reducer.loading_cadastro_despensa,
-    usuario: state.usuario_reducer.dados_usuario
+    usuario: state.usuario_reducer.dados_usuario,
+    despensas: state.despensa_reducer.despensas,
+    carregando_despensas: state.despensa_reducer.carregando_despensas
 });
 
-export default connect(mapStateToProps, {criar_despensa})(ListarDespensa);
+export default connect(mapStateToProps, {criar_despensa, listar_despensas})(ListarDespensa);
