@@ -3,7 +3,7 @@
   * Arquivo de controle de estilos do aplicativo
   * Desenvolvido por Mateus Medeiros
   * https://github.com/mathmed
-  * Última atualização no arquivo: 08/05/2019
+  * Última atualização no arquivo: 16/05/2019
   * Projeto utilizando o framework React Native
   * Software desenvolvido para disciplina de Engenharia de Software II / UFRN
 */
@@ -38,7 +38,7 @@ export default styles = StyleSheet.create({
   roboto: {fontFamily: "roboto"},
 
   /* Views */
-  container: {backgroundColor: "white", flex: 1, paddingHorizontal: 15, marginTop: 10},
+  container: {backgroundColor: "white", flex: 1, paddingHorizontal: 15},
   center: {justifyContent: "center", alignItems: "center", alignSelf: "center"},
   centerVertical: {alignItems: "center"},
   column: {flexDirection: "column"},

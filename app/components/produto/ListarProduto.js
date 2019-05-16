@@ -1,6 +1,6 @@
 
 /* 
-  * Classe de interface para listagem de despensas
+  * Classe de interface para listagem de produtos
   * Desenvolvido por Mateus Medeiros
   * https://github.com/mathmed
   * Última atualização no arquivo: 16/05/2019
@@ -11,10 +11,9 @@
 
 /* importações necessárias */
 import React, {Component} from 'react';
-import {Container, Text, Label, View, Input, Item, Button, Spinner, Root, List, ListItem, Right, Icon, Left} from "native-base";
+import {Container, Text, Label, View, Input, Item, Button, Spinner, Root, List, ListItem, Right, Icon, Picker, DatePicker} from "native-base";
 import {Modal, TouchableOpacity} from "react-native"; 
 import { connect } from 'react-redux';
-import {Actions} from "react-native-router-flux";
 import _ from "lodash";
 
 import styles from "../../styles/styles";
@@ -22,12 +21,11 @@ import styles from "../../styles/styles";
 import Utils from "../commun/Utils";
 
 /* Actions necessárias */
-import {criar_despensa, listar_despensas} from "../../actions/despensa_actions";
 
 var listar;
 
 /* Iniciando a classe de login */
-class ListarDespensa extends Component{
+class ListarProduto extends Component{
 
     /* Construtor da classe com estados utilizados */
     constructor(props){
@@ -39,14 +37,6 @@ class ListarDespensa extends Component{
         }
     }
 
-    /* Requisitando a lista de despensas */
-    componentWillMount(){
-        this.props.listar_despensas(this.props.usuario.uid);
-    }
-
-    componentWillReceiveProps(props){
-        this.setState({despensas: props.despensas})
-    }
 
     render_dados = () => {
         
@@ -71,17 +61,11 @@ class ListarDespensa extends Component{
     
     }
 
-    criar_despensa = () => {
-        this.setState({nome_cadastrar_despensa: ""})
-        this.props.criar_despensa(this.props.usuario.uid, this.state.nome_cadastrar_despensa); 
-    }
-
-
 	render(){
 
         listar = _.map(this.state.despensas, (val, uid) => {            
             return(
-                <TouchableOpacity style = {{}}  onPress = {() => Actions.listar_produtos(val)}>
+                <TouchableOpacity style = {{}}  onPress = {() => alert("dadads")}>
                     <View style = {{padding: 20, borderBottomColor: "gray", borderBottomWidth: 1, flexDirection: "row", justifyContent: "space-between"}}>
                         <View>
                             <Text style = {styles.bold}>{val.descricao}</Text>
@@ -96,7 +80,7 @@ class ListarDespensa extends Component{
         });
 
 		return(
-            <Container style = {[styles.spaceBetween, styles.container]}>
+            <Container style = {[styles.container, styles.spaceBetween]}>
                 <Modal
                 animationType="slide"
                 transparent={false}
@@ -110,19 +94,51 @@ class ListarDespensa extends Component{
                             <Button onPress = {() => this.setState({modal_cadastro: !this.state.modal_cadastro})} success style = {styles.buttonBack}>
                                 <Icon style = {styles.mediumFont} type = "FontAwesome5" name = "angle-left"></Icon>
                             </Button>
-                            <Text style = {[styles.textCenter, styles.bold, styles.primaryColor, styles.mediumFont]}>Cadastrar nova despensa</Text>
+                            <Text style = {[styles.textCenter, styles.bold, styles.primaryColor, styles.mediumFont]}>Cadastrar produto</Text>
                         </View>
 
                         <View style = {styles.bigMarginTop}>
                             <Item floatingLabel>
-                                <Label>Nome para a despensa</Label>
+                                <Label>Nome do produto</Label>
                                 <Input value = {this.state.nome_cadastrar_despensa} onChangeText = {(texto) => this.setState({nome_cadastrar_despensa: texto})} onFocus = {() => this.setState({input_color:"#19197f"})} onBlur = {() => this.setState({input_color: "transparent"})} underlineColorAndroid = {this.state.input_color}/>
                             </Item>
+
+                            <View style = {styles.bigMarginTop}>
+                                <Label>Categoria do produto</Label>
+                                <Picker
+                                    mode="dropdown"
+                                    iosHeader="Select your SIM"
+                                    iosIcon={<Icon name="arrow-down" />}
+                                    style={{ width: undefined }}
+                                    >
+                                    <Picker.Item label="Alimento" value="key0" />
+                                    <Picker.Item label="Limpeza" value="key1" />
+                                </Picker>
+                            </View>    
+
+                            <View style = {styles.marginTop}>
+                                <Label>Data de validade</Label>
+                                <DatePicker
+                                    defaultDate={new Date(2018, 4, 4)}
+                                    minimumDate={new Date(2018, 1, 1)}
+                                    maximumDate={new Date(2018, 12, 31)}
+                                    locale={"pt"}
+                                    timeZoneOffsetInMinutes={undefined}
+                                    modalTransparent={false}
+                                    animationType={"fade"}
+                                    androidMode={"default"}
+                                    placeHolderText="Selecione a data"
+                                    textStyle={[styles.primaryColor, styles.bold]}
+                                    placeHolderTextStyle={{ color: "#d3d3d3" }}
+                                    onDateChange={this.setDate}
+                                    disabled={false}
+                                />
+                            </View>
                         </View>
 
                         <View style = {[styles.bigMarginTop, styles.center]}>
                             {!this.props.loading ?
-                            <Button onPress = {() => {this.criar_despensa()}} iconRight rounded success full style = {styles.rounded}>
+                            <Button onPress = {() => {}} iconRight rounded success full style = {styles.rounded}>
                                 <Text>Cadastrar</Text>
                                 <Icon type = "FontAwesome5" name = "plus"></Icon>
                             </Button>
@@ -140,10 +156,8 @@ class ListarDespensa extends Component{
                     </Root>
                 </Modal>
 
-                <List style = {styles.marginTop}>
-                  
-                  {this.render_dados()}
-
+                <List>
+                  <Text>eae</Text>
                 </List>
 
                 <View style = {[styles.marginBottom, styles.viewCircleButton]}>
@@ -159,10 +173,6 @@ class ListarDespensa extends Component{
 
 
 const mapStateToProps = state => ({
-    loading: state.despensa_reducer.loading_cadastro_despensa,
-    usuario: state.usuario_reducer.dados_usuario,
-    despensas: state.despensa_reducer.despensas,
-    carregando_despensas: state.despensa_reducer.carregando_despensas
 });
 
-export default connect(mapStateToProps, {criar_despensa, listar_despensas})(ListarDespensa);
+export default connect(mapStateToProps, {})(ListarProduto);

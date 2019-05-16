@@ -3,7 +3,7 @@
   * Classe de controle das rotas do aplicativo
   * Desenvolvido por Mateus Medeiros
   * https://github.com/mathmed
-  * Última atualização no arquivo: 29/04/2019
+  * Última atualização no arquivo: 16/05/2019
   * Projeto utilizando o framework React Native
   * Software desenvolvido para disciplina de Engenharia de Software II / UFRN
 */
@@ -14,6 +14,7 @@ import { Router, Scene } from 'react-native-router-flux';
 import Login from './components/Login.js';
 import Cadastro from './components/Cadastro.js';
 import Inicio from './components/Inicio.js';
+import ListarProdutos from './components/produto/ListarProduto.js';
 
 
 export default class Rotas extends Component{
@@ -26,6 +27,7 @@ export default class Rotas extends Component{
 					<Scene key = 'login' component = {Login} hideNavBar />
 					<Scene key = 'inicio' component = {Inicio} hideNavBar />
 					<Scene key = 'cadastro' component = {Cadastro} title="Criar nova conta" titleStyle = {{color: 'white', backgroundColor: '#0f0f4c', fontSize: 20}} hideNavBar = {false} navigationBarStyle={{backgroundColor: '#0f0f4c', height: 60}} headerTintColor="white" />
+					<Scene key = 'listar_produtos' component = {ListarProdutos} title="Produtos" titleStyle = {{color: 'white', backgroundColor: '#0f0f4c', fontSize: 20}} hideNavBar = {false} navigationBarStyle={{backgroundColor: '#0f0f4c', height: 60}} headerTintColor="white" />
 				</Scene>
 			</Router>
 		)
