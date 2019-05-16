@@ -3,7 +3,7 @@
   * Classe de interface para listagem de despensas
   * Desenvolvido por Mateus Medeiros
   * https://github.com/mathmed
-  * Última atualização no arquivo: 09/05/2019
+  * Última atualização no arquivo: 16/05/2019
   * Projeto utilizando o framework React Native
   * Software desenvolvido para disciplina de Engenharia de Software II / UFRN
 */
@@ -12,11 +12,13 @@
 /* importações necessárias */
 import React, {Component} from 'react';
 import {Container, Text, Label, View, Input, Item, Button, Spinner, Root, List, ListItem, Right, Icon, Left} from "native-base";
-import {Modal, TouchableHighlight} from "react-native"; 
+import {Modal, TouchableOpacity} from "react-native"; 
 import { connect } from 'react-redux';
 import _ from "lodash";
 
 import styles from "../../styles/styles";
+
+import Utils from "../commun/Utils";
 
 /* Actions necessárias */
 import {criar_despensa, listar_despensas} from "../../actions/despensa_actions";
@@ -32,7 +34,6 @@ class ListarDespensa extends Component{
         this.state = {
             modal_cadastro: false,
             nome_cadastrar_despensa: "",
-            repita_color: "transparent",
             despensas: ""
         }
     }
@@ -51,8 +52,8 @@ class ListarDespensa extends Component{
         if(this.props.carregando_despensas)
             return (
                 <View>
-                    <Spinner color='#e52d2d' />
-                    <Text style = {[styles.textCenter, styles.bold, styles.secundaryColor]}>Carregando suas despensas ...</Text>
+                    <Spinner color= "green" />
+                    <Text style = {[styles.textCenter, styles.bold, styles.greenColor]}>Carregando suas despensas ...</Text>
                 </View>
             )
         
@@ -79,15 +80,19 @@ class ListarDespensa extends Component{
 
         listar = _.map(this.state.despensas, (val, uid) => {            
             return(
-                <TouchableHighlight style = {styles.secundaryColorBack}  onPress = {() => alert("dadads")}>
-                    <View>
-                            <Text>{val.descricao}</Text>
+                <TouchableOpacity style = {{}}  onPress = {() => alert("dadads")}>
+                    <View style = {{padding: 20, borderBottomColor: "gray", borderBottomWidth: 1, flexDirection: "row", justifyContent: "space-between"}}>
+                        <View>
+                            <Text style = {styles.bold}>{val.descricao}</Text>
+                            <Text style = {styles.smallFont}>Criada em {Utils.formata_data(val.criada_em)}</Text>
+                        </View>
+                        <View>
+                            <Icon type = "FontAwesome5" name = "hand-point-right" style = {styles.primaryColor}></Icon>
+                        </View>
                     </View>
-                </TouchableHighlight>
+                </TouchableOpacity>
             )
         });
-
-        console.log(this.state.despensas)
 
 		return(
             <Container style = {[styles.spaceBetween, styles.container]}>
