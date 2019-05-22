@@ -3,7 +3,7 @@
   * Classe de interface para listagem de despensas
   * Desenvolvido por Mateus Medeiros
   * https://github.com/mathmed
-  * Última atualização no arquivo: 16/05/2019
+  * Última atualização no arquivo: 22/05/2019
   * Projeto utilizando o framework React Native
   * Software desenvolvido para disciplina de Engenharia de Software II / UFRN
 */
@@ -81,14 +81,14 @@ class ListarDespensa extends Component{
 
         listar = _.map(this.state.despensas, (val, uid) => {            
             return(
-                <TouchableOpacity style = {{}}  onPress = {() => Actions.listar_produtos(val)}>
+                <TouchableOpacity style = {{}}  onPress = {() => Actions.listar_produtos({despensa:val})}>
                     <View style = {{padding: 20, borderBottomColor: "gray", borderBottomWidth: 1, flexDirection: "row", justifyContent: "space-between"}}>
                         <View>
                             <Text style = {styles.bold}>{val.descricao}</Text>
                             <Text style = {styles.smallFont}>Criada em {Utils.formata_data(val.criada_em)}</Text>
                         </View>
                         <View>
-                            <Icon type = "FontAwesome5" name = "hand-point-right" style = {styles.primaryColor}></Icon>
+                            <Icon type = "FontAwesome5" name = "angle-right" style = {styles.primaryColor}></Icon>
                         </View>
                     </View>
                 </TouchableOpacity>

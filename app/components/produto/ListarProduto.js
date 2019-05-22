@@ -3,7 +3,7 @@
   * Classe de interface para listagem de produtos
   * Desenvolvido por Mateus Medeiros
   * https://github.com/mathmed
-  * Última atualização no arquivo: 16/05/2019
+  * Última atualização no arquivo: 22/05/2019
   * Projeto utilizando o framework React Native
   * Software desenvolvido para disciplina de Engenharia de Software II / UFRN
 */
@@ -11,9 +11,11 @@
 
 /* importações necessárias */
 import React, {Component} from 'react';
-import {Container, Text, Label, View, Input, Item, Button, Spinner, Root, List, ListItem, Right, Icon, Picker, DatePicker} from "native-base";
-import {Modal, TouchableOpacity} from "react-native"; 
+import {Container, Text, Label, View, Input, Item, Button, Spinner, Root, List, Icon, Picker, DatePicker} from "native-base";
+import {Modal, TouchableOpacity, ScrollView} from "react-native"; 
 import { connect } from 'react-redux';
+import { TextInputMask } from 'react-native-masked-text'
+
 import _ from "lodash";
 
 import styles from "../../styles/styles";
@@ -21,6 +23,7 @@ import styles from "../../styles/styles";
 import Utils from "../commun/Utils";
 
 /* Actions necessárias */
+import {cadastrar_produto} from "../../actions/produto_actions";
 
 var listar;
 
@@ -33,10 +36,31 @@ class ListarProduto extends Component{
         this.state = {
             modal_cadastro: false,
             nome_cadastrar_despensa: "",
-            despensas: ""
+            unidade_medida: "Kg",
+            quantidade: "",
+            preco_unitario: "",
+            categoria: "1",
+            validade: "",
+            fornecedor: "Nenhum",
+            despensas: "",
+            input_preco_color: "grey",
+            input_nome_color: "grey" 
         }
     }
+    cadastrar_produto = () => {
+        
+        /* Guardando as variáveis do estado */
+        let {nome_cadastrar_despensa, unidade_medida, quantidade, preco_unitario, categoria,
+        validade, fornecedor} = this.state;
 
+        /* Chamando a Actions responsável por contactar o servidor */
+        this.props.cadastrar_produto(
+            nome_cadastrar_despensa, unidade_medida, quantidade, preco_unitario, categoria,
+            validade, fornecedor, this.props.despensa.uid
+        );
+
+
+    }
 
     render_dados = () => {
         
@@ -62,6 +86,7 @@ class ListarProduto extends Component{
     }
 
 	render(){
+
 
         listar = _.map(this.state.despensas, (val, uid) => {            
             return(
@@ -89,7 +114,7 @@ class ListarProduto extends Component{
                     this.setState({modal_cadastro: !this.state.modal_cadastro})
                 }}>
                     <Root>
-                    <View style={[styles.container, styles.bigMarginTop]}>
+                    <ScrollView style={[styles.container, styles.bigMarginTop]}>
                         <View style = {[styles.marginTop, styles.spaceAround, styles.row, styles.centerVertical]}>
                             <Button onPress = {() => this.setState({modal_cadastro: !this.state.modal_cadastro})} success style = {styles.buttonBack}>
                                 <Icon style = {styles.mediumFont} type = "FontAwesome5" name = "angle-left"></Icon>
@@ -98,10 +123,61 @@ class ListarProduto extends Component{
                         </View>
 
                         <View style = {styles.bigMarginTop}>
-                            <Item floatingLabel>
+                            <View>
                                 <Label>Nome do produto</Label>
-                                <Input value = {this.state.nome_cadastrar_despensa} onChangeText = {(texto) => this.setState({nome_cadastrar_despensa: texto})} onFocus = {() => this.setState({input_color:"#19197f"})} onBlur = {() => this.setState({input_color: "transparent"})} underlineColorAndroid = {this.state.input_color}/>
-                            </Item>
+                                <Input
+                                    placeholder = "Ex: Arroz branco"
+                                    value = {this.state.nome_cadastrar_despensa} 
+                                    onChangeText = {(texto) => this.setState({nome_cadastrar_despensa: texto})} 
+                                    onFocus = {() => this.setState({input_nome_color:"#19197f"})} 
+                                    onBlur = {() => this.setState({input_nome_color: "grey"})} 
+                                    underlineColorAndroid = {this.state.input_nome_color}
+                                />
+                            </View>
+                            <View style = {styles.marginTop}>
+                                <Label>Unidade de medida</Label>
+                                <Picker
+                                    mode="dropdown"
+                                    iosHeader="Select your SIM"
+                                    iosIcon={<Icon name="arrow-down" />}
+                                    style={{ width: undefined }}
+                                    selectedValue = {this.state.unidade_medida}
+                                    onValueChange = {(value) => this.setState({unidade_medida: value})}
+                                    >
+                                    <Picker.Item label="Kg" value="Kg" />
+                                    <Picker.Item label="g" value="g" />
+                                    <Picker.Item label="L" value="L" />
+                                    <Picker.Item label="ml" value="ml" />
+                                    <Picker.Item label="unidade" value="unidade" />
+                                </Picker>
+                            </View>
+                            <View style = {styles.marginTop}>
+                                <Label>Quantidade</Label>
+                                <Input
+                                    placeholder = 'Ex: 5'
+                                    keyboardType = "numeric"
+                                    onFocus = {() => this.setState({input_preco_color:"#19197f"})} 
+                                    onBlur = {() => this.setState({input_preco_color: "grey"})} 
+                                    underlineColorAndroid = {this.state.input_preco_color}
+                                    value = {this.state.quantidade}
+                                    onChangeText = {(texto) => this.setState({quantidade: texto})}
+                                    
+                                />
+                            </View>
+
+                           <View style = {styles.bigMarginTop}>
+                                <Label>Preço unitário</Label>
+                                <TextInputMask
+                                    placeholder = 'Ex: R$ 3,50'
+                                    type = {'money'}
+                                    onFocus = {() => this.setState({input_preco_color:"#19197f"})} 
+                                    onBlur = {() => this.setState({input_preco_color: "grey"})} 
+                                    underlineColorAndroid = {this.state.input_preco_color}
+                                    value = {this.state.preco_unitario}
+                                    onChangeText = {(texto) => this.setState({preco_unitario: texto})}
+                                    
+                                />
+                            </View>
 
                             <View style = {styles.bigMarginTop}>
                                 <Label>Categoria do produto</Label>
@@ -110,18 +186,21 @@ class ListarProduto extends Component{
                                     iosHeader="Select your SIM"
                                     iosIcon={<Icon name="arrow-down" />}
                                     style={{ width: undefined }}
+                                    selectedValue = {this.state.categoria}
+                                    onValueChange = {value => this.setState({categoria: value})}
                                     >
-                                    <Picker.Item label="Alimento" value="key0" />
-                                    <Picker.Item label="Limpeza" value="key1" />
+                                    <Picker.Item label="Alimento" value="1" />
+                                    <Picker.Item label="Limpeza" value="2" />
                                 </Picker>
                             </View>    
 
                             <View style = {styles.marginTop}>
                                 <Label>Data de validade</Label>
                                 <DatePicker
-                                    defaultDate={new Date(2018, 4, 4)}
+                                    defaultDate={new Date()}
                                     minimumDate={new Date(2018, 1, 1)}
-                                    maximumDate={new Date(2018, 12, 31)}
+                                    maximumDate={new Date(2030, 12, 31)}
+                                    format
                                     locale={"pt"}
                                     timeZoneOffsetInMinutes={undefined}
                                     modalTransparent={false}
@@ -130,15 +209,31 @@ class ListarProduto extends Component{
                                     placeHolderText="Selecione a data"
                                     textStyle={[styles.primaryColor, styles.bold]}
                                     placeHolderTextStyle={{ color: "#d3d3d3" }}
-                                    onDateChange={this.setDate}
+                                    onDateChange={value => this.setState({validade: value})}
                                     disabled={false}
+                                    selectedValue = {this.state.validade}
                                 />
+                            </View>
+
+                            <View style = {styles.marginTop}>
+                                <Label>Fornecedor</Label>
+                                <Picker
+                                    mode="dropdown"
+                                    iosHeader="Select your SIM"
+                                    iosIcon={<Icon name="arrow-down" />}
+                                    style={{ width: undefined }}
+                                    selectedValue = {this.state.fornecedor}
+                                    onValueChange = {value => this.setState({fornecedor: value})}
+                                    >
+                                    <Picker.Item label="Nenhum" value="" />
+                                    <Picker.Item label="ZigZag" value="1" />
+                                </Picker>
                             </View>
                         </View>
 
-                        <View style = {[styles.bigMarginTop, styles.center]}>
+                        <View style = {[styles.bigMarginTop, styles.bigMarginBottom, styles.center]}>
                             {!this.props.loading ?
-                            <Button onPress = {() => {}} iconRight rounded success full style = {styles.rounded}>
+                            <Button onPress = {() => this.cadastrar_produto()} iconRight rounded success full style = {styles.rounded}>
                                 <Text>Cadastrar</Text>
                                 <Icon type = "FontAwesome5" name = "plus"></Icon>
                             </Button>
@@ -152,7 +247,7 @@ class ListarProduto extends Component{
                             }
                         </View>
 
-                    </View>
+                    </ScrollView>
                     </Root>
                 </Modal>
 
@@ -175,4 +270,4 @@ class ListarProduto extends Component{
 const mapStateToProps = state => ({
 });
 
-export default connect(mapStateToProps, {})(ListarProduto);
+export default connect(mapStateToProps, {cadastrar_produto})(ListarProduto);
