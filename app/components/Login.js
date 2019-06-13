@@ -28,7 +28,7 @@ class Login extends Component{
     /* Construtor da classe com estados utilizados */
     constructor(props){
         super(props);
-        this.state = {usuario: "", senha: ""}
+        this.state = {usuario: "mateus", senha: "123456"}
     }
 
 	render(){
