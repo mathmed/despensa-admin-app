@@ -20,7 +20,7 @@ import _ from "lodash";
 import styles from "../../styles/styles";
 
 /* Actions necessárias */
-import { listar_fornecedores, cadastrar_fornecedor } from "../../actions/fornecedor_actions";
+import { listar_fornecedores, cadastrar_fornecedor, remover_fornecedor } from "../../actions/fornecedor_actions";
 
 var listar;
 
@@ -32,8 +32,13 @@ class ListarFornecedor extends Component {
         super(props);
         this.state = {
             modal_cadastro: false,
+            modal_editar: false,
             nome_cadastrar_fornecedor: "",
-            fornecedores: ""
+            fornecedores: "",
+
+            id_editar: "",
+            nome_editar: ""
+
         }
     }
 
@@ -77,11 +82,20 @@ class ListarFornecedor extends Component {
 
     }
 
+    /* Função para abrir o modal e iniciar a edição de um fornecedor */
+    iniciar_edicao = (uid, descricao) => {
+
+        /* Alterando o estado da classe */
+        this.setState({ nome_editar: descricao, id_editar: uid, modal_editar: true });
+
+    }
+
     render() {
 
         listar = _.map(this.state.fornecedores, (val, uid) => {
+
             return (
-                <TouchableOpacity style={{}} onPress={() => alert("opa")}>
+                <TouchableOpacity style={{}} onPress={() => this.iniciar_edicao(val.id, val.descricao)}>
                     <View style={{ padding: 20, borderBottomColor: "gray", borderBottomWidth: 1, flexDirection: "row", justifyContent: "space-between" }}>
                         <View>
                             <Text style={styles.bold}>{val.descricao}</Text>
@@ -139,6 +153,62 @@ class ListarFornecedor extends Component {
                     </Root>
                 </Modal>
 
+                <Modal
+                    animationType="slide"
+                    transparent={false}
+                    visible={this.state.modal_editar}
+                    onRequestClose={() => {
+                        this.setState({ modal_editar: !this.state.modal_editar })
+                    }}>
+                    <Root>
+                        <View style={[styles.container]}>
+                            <View style={[styles.bigMarginTop, { flex: 0.2 }]}>
+                                <View style={[styles.spaceAround, styles.row, styles.centerVertical]}>
+                                    <Button onPress={() => this.setState({ modal_editar: !this.state.modal_editar })} success style={styles.buttonBack}>
+                                        <Icon style={styles.mediumFont} type="FontAwesome5" name="angle-left"></Icon>
+                                    </Button>
+                                    <Text style={[styles.textCenter, styles.bold, styles.primaryColor, styles.mediumFont]}>Editar fornecedor</Text>
+                                </View>
+                            </View>
+
+                            <View style={[styles.bigMarginTop, { flex: 0.2 }]}>
+                                <Item floatingLabel>
+                                    <Label>Nome do fornecedor</Label>
+                                    <Input value={this.state.nome_editar} onChangeText={(texto) => this.setState({ nome_editar: texto })} onFocus={() => this.setState({ input_color: "#19197f" })} onBlur={() => this.setState({ input_color: "transparent" })} underlineColorAndroid={this.state.input_color} />
+                                </Item>
+                            </View>
+
+                            <View style={[styles.bigMarginTop, styles.center, { flex: 0.1 }]}>
+                                {!this.props.loading ?
+                                    <View style={styles.bigMarginTop}>
+                                        <View>
+                                            <Button onPress={() => { this.atualizar() }} iconRight rounded success style={styles.rounded}>
+                                                <Text>ATUALIZAR</Text>
+                                                <Icon type="FontAwesome5" name="check-circle"></Icon>
+                                            </Button>
+                                        </View>
+                                        <View style={styles.bigMarginTop}>
+                                            <Button onPress={() => { this.props.remover_fornecedor(this.state.id_editar, this.props.usuario.uid); this.setState({modal_editar: false}) }} iconRight rounded danger style={styles.rounded}>
+                                                <Text>REMOVER</Text>
+                                                <Icon type="FontAwesome5" name="trash-alt"></Icon>
+                                            </Button>
+                                        </View>
+
+                                    </View>
+
+
+                                    :
+
+                                    <View>
+                                        <Spinner color='green' />
+                                        <Text style={[styles.textCenter, styles.bold, styles.greenColor]}>Cadastrando fornecedor, aguarde...</Text>
+                                    </View>
+                                }
+                            </View>
+                        </View>
+                    </Root>
+                </Modal >
+
                 <List style={styles.marginTop}>
 
                     {this.render_dados()}
@@ -150,7 +220,7 @@ class ListarFornecedor extends Component {
                         <Icon type="FontAwesome5" name="plus"></Icon>
                     </Button>
                 </View>
-            </Container>
+            </Container >
 
         )
     }
@@ -164,4 +234,4 @@ const mapStateToProps = state => ({
     carregando_fornecedores: state.fornecedor_reducer.carregando_fornecedores
 });
 
-export default connect(mapStateToProps, { listar_fornecedores, cadastrar_fornecedor })(ListarFornecedor);
+export default connect(mapStateToProps, { listar_fornecedores, cadastrar_fornecedor, remover_fornecedor })(ListarFornecedor);
