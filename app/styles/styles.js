@@ -54,6 +54,7 @@ export default styles = StyleSheet.create({
   bordered:{borderWidth: 2, borderColor: "#19197f"},
   rounded: {borderRadius: 20},
   paddingHorizontal: {paddingHorizontal:40},
+  elevation: {elevation: 2, backgroundColor: "white", borderRadius: 4, padding: 10},
 
   /* Específicos */
   viewTitleLogin: {backgroundColor:"#3333ff" },

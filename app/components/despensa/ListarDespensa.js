@@ -24,7 +24,6 @@ import Utils from "../commun/Utils";
 /* Actions necessárias */
 import {criar_despensa, listar_despensas} from "../../actions/despensa_actions";
 
-var listar;
 
 /* Iniciando a classe de login */
 class ListarDespensa extends Component{
