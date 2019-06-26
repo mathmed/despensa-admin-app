@@ -51,7 +51,11 @@ class Detalhes extends Component {
 
             <Container style={[styles.container]}>
                 <View style={[styles.bigMarginTop, styles.elevation, styles.bigMarginTop, styles.center]}>
-                    <Label style={[styles.bold, styles.primaryColor]}>Válido até {Utils.formata_data(this.state.validade)}</Label>
+                    {this.state.validade ?
+                        <Label style={[styles.bold, styles.primaryColor]}>Válido até {Utils.formata_data(this.state.validade)}</Label>
+                        :
+                        <Label style={[styles.bold, styles.secundaryColor]}>Validade não informada</Label>
+                    }
                 </View>
 
                 <View style={[styles.center, styles.bigMarginTop]}>

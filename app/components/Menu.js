@@ -3,7 +3,7 @@
   * Classe da interface do menu lateral do aplicativo
   * Desenvolvido por Mateus Medeiros
   * https://github.com/mathmed
-  * Última atualização no arquivo: 13/06/2019
+  * Última atualização no arquivo: 26/06/2019
   * Projeto utilizando o framework React Native
   * Software desenvolvido para disciplina de Engenharia de Software II / UFRN
 */
@@ -34,7 +34,7 @@ class Menu extends Component {
                 <StatusBar backgroundColor="#0f0f4c" />
 
 
-                <ListItem icon style={styles.marginTop}>
+                <ListItem icon style={styles.bigMarginTop}>
                     <Left>
                         <Button style={{ backgroundColor: "blue" }}>
                             <Icon type="FontAwesome5" active name="user" />
@@ -42,16 +42,6 @@ class Menu extends Component {
                     </Left>
                     <Body>
                         <Text>Meu perfil</Text>
-                    </Body>
-                </ListItem>
-                <ListItem icon style={styles.marginTop}>
-                    <Left>
-                        <Button style={{ backgroundColor: "#FF9501" }}>
-                            <Icon type="FontAwesome5" active name="edit" />
-                        </Button>
-                    </Left>
-                    <Body>
-                        <Text>Categorias</Text>
                     </Body>
                 </ListItem>
 

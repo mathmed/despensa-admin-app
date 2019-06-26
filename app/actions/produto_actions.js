@@ -8,7 +8,7 @@
   * Software desenvolvido para disciplina de Engenharia de Software II / UFRN
 */
 
-import {showMessage} from "../components/commun/ToastService";
+import { showMessage } from "../components/commun/ToastService";
 
 export const cadastrar_produto = (
     nome_cadastrar_despensa, unidade_medida, quantidade, preco_unitario, categoria, validade, fornecedor, despensa
@@ -18,8 +18,17 @@ export const cadastrar_produto = (
 
         dispatch({ type: "CADASTRANDO_PRODUTO" })
 
+
+        /* Formatando algumas entradas */
+        preco_unitario = preco_unitario.replace("R$", "");
+        preco_unitario = preco_unitario.replace(".", "");
+        preco_unitario = preco_unitario.replace(",", ".");
+
+        quantidade = quantidade.replace(".", "");
+        quantidade = quantidade.replace(",", ".");
+
         /* Verificando se os dados foram passados */
-        if (1) {
+        if (validacao_cadastro_produto(nome_cadastrar_despensa, unidade_medida, quantidade, preco_unitario, categoria, validade, fornecedor, despensa)) {
 
             /* Verificando se a validade foi informada para fazer a formatação */
             if (validade)
@@ -71,7 +80,8 @@ export const cadastrar_produto = (
                 })
 
 
-        }
+        } else  dispatch({ type: "FINALIZAR_CADASTRO_PRODUTO" });
+
 
     }
 }
@@ -113,5 +123,27 @@ const fetch_lista = (id_despensa, dispatch) => {
 
         }).catch(err => alert(JSON.stringify(err)))
 
+
+}
+
+
+const validacao_cadastro_produto = (nome_cadastrar_despensa, unidade_medida, quantidade, preco_unitario, categoria, validade, fornecedor, despensa) => {
+
+    if (nome_cadastrar_despensa.length < 3) {
+        showMessage("Informe o nome do produto", "danger");
+        return false;
+    }
+
+    if(quantidade <= 0){
+        showMessage("Informe uma quantidade válida", "danger");
+        return false;
+    }
+
+    if(preco_unitario <= 0){
+        showMessage("Informe um preço unitário válido", "danger");
+        return false;
+    }
+
+    return true;
 
 }
